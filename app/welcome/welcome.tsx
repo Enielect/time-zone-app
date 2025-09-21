@@ -118,18 +118,21 @@ const DialogFormDemo = () => {
     // Fetch existing todos from backend on component mount
     const fetchTodos = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/api/tasks`);
+        const response = await fetch(
+          `${BASE_URL}/api/tasks?timeZone=${getUserTimezone()}`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch todos");
         }
         const data = await response.json();
+        console.log(data, "this is the todo data");
         const formattedData = data.data.map((item: any) => ({
           id: item.id,
           title: item.title,
           tag: item.tag,
           details: item.details,
           dueDate: item.timeDue,
-          status: 'todo',
+          status: "todo",
           createdAt: item.createdAt,
           // timezone: item.timezone,
         }));

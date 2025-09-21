@@ -97,6 +97,7 @@ export const formatDateTimeForUser = (
         return formatTz(zonedDate, timeFormat, { timeZone: timezone });
 
       case "full":
+        return formatTz(zonedDate, "MMM d, yyyy h:mm a", { timeZone: timezone });
       default:
         const fullFormat = includeTimezone
           ? "MMM d, yyyy h:mm a zzz"

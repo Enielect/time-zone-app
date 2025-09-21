@@ -133,9 +133,12 @@ const KanbanCardSection = ({
                         }
                       >
                         Due:{" "}
-                        {formatDateTimeForUser(todo.dueDate, {
-                          format: "full",
-                        })}
+                        {formatDateTimeForUser(
+                          new Date(todo.dueDate).toISOString(),
+                          {
+                            format: "full",
+                          }
+                        )}
                       </span>
                     </div>
                     <div className="text-xs text-gray-500">
