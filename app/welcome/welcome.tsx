@@ -123,7 +123,7 @@ const DialogFormDemo = () => {
           throw new Error("Failed to fetch todos");
         }
         const data = await response.json();
-        const formattedData = data.map((item: any) => ({
+        const formattedData = data.data.map((item: any) => ({
           id: item.id,
           title: item.title,
           tag: item.tag,
