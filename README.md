@@ -1,15 +1,19 @@
-# Welcome to React Router!
+# Time Zone Todo App
 
-A modern, production-ready template for building full-stack React applications using React Router.
+A modern todo list application built with React Router that automatically handles tasks across different time zones.
 
 ## Features
 
+- 🌍 Time zone aware task scheduling
+- ⏰ Automatic time conversion for global users
 - 🚀 Server-side rendering
 - ⚡️ Hot Module Replacement (HMR)
 - 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
+- 🔄 Real-time data loading and mutations
 - 🔒 TypeScript by default
 - 🎉 TailwindCSS for styling
+- ✅ Create, edit, and delete tasks
+- 📅 Due date management with time zone support
 - 📖 [React Router docs](https://reactrouter.com/)
 
 ## Getting Started
@@ -40,14 +44,18 @@ Create a production build:
 npm run build
 ```
 
-## Deployment
+## Time Zone Features
 
-[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fremix-run%2Freact-router-templates%2Ftree%2Fmain%2Fvercel&project-name=my-react-router-app&repository-name=my-react-router-app)
+- Automatically detects user's local time zone
+- Displays task due dates in user's local time
+- Stores all dates in UTC for consistency
+- Supports scheduling tasks for different time zones
+- Visual indicators for overdue tasks across time zones
 
 ## Styling
 
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a clean, responsive todo interface.
 
 ---
 
-Built with ❤️ using React Router.
+Built with ❤️ using React Router for seamless time zone management.
