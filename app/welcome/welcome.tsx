@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DialogForm from "../components/ui/dialog-form";
 import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/text-area";
@@ -22,6 +22,8 @@ type InformationDataProps = {
   informationData: FormInfo;
   setInformationData: React.Dispatch<React.SetStateAction<FormInfo>>;
 };
+
+const BASE_URL = "https://twelve-factor-app.onrender.com";
 
 const ChildComponent = ({
   informationData,
@@ -112,6 +114,35 @@ const DialogFormDemo = () => {
     details: "",
   });
 
+  useEffect(() => {
+    // Fetch existing todos from backend on component mount
+    const fetchTodos = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}/api/tasks`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch todos");
+        }
+        const data = await response.json();
+        const formattedData = data.map((item: any) => ({
+          id: item.id,
+          title: item.title,
+          tag: item.tag,
+          details: item.details,
+          dueDate: item.timeDue,
+          status: 'todo',
+          createdAt: item.createdAt,
+          // timezone: item.timezone,
+        }));
+        // Assuming the backend returns an array of todos in the correct format
+        setTodos(formattedData);
+      } catch (error) {
+        console.error("Error fetching todos:", error);
+      }
+    };
+
+    fetchTodos();
+  }, []);
+
   const onCloseCb = () => {
     setInformationData({ tag: "", title: "", time: "", details: "" });
   };
@@ -125,25 +156,48 @@ const DialogFormDemo = () => {
       return { success: false, message: "Please fill in title and tag" };
     }
 
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    // Get user's current timezone
     const userTimezone = getUserTimezone();
 
-    // Create new todo item with proper timezone handling
-    const newTodo: TodoItem = {
-      id: Date.now().toString(), // Simple ID generation
+    const newTodo = {
+      title: formData.title,
+      tag: formData.tag,
+      details: formData.details,
+      timeDue: prepareDateTimeForStorage(formData.time), // Convert to ISO string
+    };
+
+    const formattedTodo: TodoItem = {
+      id: Date.now().toString(),
       title: formData.title,
       tag: formData.tag,
       details: formData.details,
       dueDate: prepareDateTimeForStorage(formData.time), // Convert to ISO string
       status: "todo",
-      createdAt: new Date().toISOString(), // Store as ISO string
-      timezone: userTimezone.timezone, // Store user's timezone
+      createdAt: new Date().toISOString(),
+      timezone: userTimezone,
     };
 
+    try {
+      const response = await fetch(`${BASE_URL}/api/tasks`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newTodo),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add todo");
+      }
+
+      const result = await response.json();
+      console.log("Todo added successfully:", result);
+    } catch (err) {
+      console.error("Error adding todo:", err);
+      return { success: false, message: "Failed to add todo" };
+    }
+
     // Add to todos list
-    setTodos((prevTodos) => [...prevTodos, newTodo]);
+    setTodos((prevTodos) => [...prevTodos, formattedTodo]);
 
     // Clear form
     setInformationData({

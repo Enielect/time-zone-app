@@ -46,7 +46,6 @@ const KanbanCardSection = ({
   status: "todo" | "in-progress" | "completed";
 }) => {
   const filteredTodos = todos.filter((todo) => todo.status === status);
-  const userTimezone = getUserTimezone();
 
   const getUrgencyStyles = (urgencyLevel: string) => {
     switch (urgencyLevel) {
