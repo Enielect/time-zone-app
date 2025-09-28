@@ -20,6 +20,7 @@ import {
   getUrgencyLevel,
   getUserTimezone,
 } from "~/lib/timezone-utils";
+import { ScrollArea } from "./scroll-area";
 
 export type TodoItem = {
   id: string;
@@ -194,14 +195,16 @@ const KanbanCardSection = ({
 
 const TodoUI = ({ todos }: TodoUIProps) => {
   return (
-    <div className="flex h-full gap-3">
-      <KanbanCardSection title="To-do" todos={todos} status="todo" />
-      {/* <KanbanCardSection
+    <div className="flex h-full  gap-3">
+      <ScrollArea className="h-[100dvh] w-[350px] rounded-md border p-4">
+        <KanbanCardSection title="To-do" todos={todos} status="todo" />
+        {/* <KanbanCardSection
         title="In Progress"
         todos={todos}
         status="in-progress"
-      />
-      <KanbanCardSection title="Completed" todos={todos} status="completed" /> */}
+        />
+        <KanbanCardSection title="Completed" todos={todos} status="completed" /> */}
+      </ScrollArea>
     </div>
   );
 };

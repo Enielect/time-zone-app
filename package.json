@@ -9,6 +9,7 @@
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
+    "@radix-ui/react-scroll-area": "^1.2.10",
     "@react-router/node": "^7.7.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
